@@ -8,6 +8,8 @@ services:
       dockerfile: ./docker/phpfpm/Dockerfile
     volumes:
       - ./src/:/var/www/
+    networks:
+      - traefik-proxy_default
   nginx:
     image: ${USER:-user}-${APP_NAME:-nginx}/nginx:local
     build:
@@ -19,5 +21,15 @@ services:
     volumes:
       - ./src/:/var/www/
       - ./docker/nginx/templates:/etc/nginx/templates
-    ports:
-      - "80:80"
+    labels:
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${DOMAIN}`)"
+#    ports:
+#      - "80:80"
+    expose:
+      - 80
+    networks:
+      - traefik-proxy_default
+
+networks:
+  traefik-proxy_default:
+    external: true
