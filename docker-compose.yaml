@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  php:
+    image: ${USER:-user}-${APP_NAME:-php}/app:local
+    build:
+      context: ./
+      dockerfile: ./docker/phpfpm/Dockerfile
+    volumes:
+      - ./:/var/www/
+  nginx:
+    image: ${USER:-user}-${APP_NAME:-nginx}/nginx:local
+    build:
+      context: ./
+      dockerfile: ./docker/nginx/Dockerfile
+    environment:
+      NGINX_HOST: ${NGINX_HOST:-localhost}
+      NGINX_PORT: ${NGINX_PORT:-80}
+    volumes:
+      - ./:/var/www/
+      - ./docker/nginx/templates:/etc/nginx/templates
+    ports:
+      - "80:80"
