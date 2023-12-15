@@ -2,18 +2,18 @@
 
 set -e
 
-if [ ! -f src/composer.json ]; then
+if [ ! -f composer.json ]; then
   rm -Rf tmp/
-  composer create-project symfony/skeleton:"7.0.*" src
+  composer create-project symfony/skeleton:"7.0.*" tmp
 
-#  cd tmp
-#  cp -Rpa . ..
-#  cd ..
-#  rm -Rf tmp/
+  cd tmp
+  cp -Rpa . ..
+  cd ..
+  rm -Rf tmp/
 fi
 
 
-if [ -z "$(ls -A 'src/vendor/' 2>/dev/null)" ]; then
+if [ -z "$(ls -A 'vendor/' 2>/dev/null)" ]; then
   composer install --prefer-dist --no-progress --no-interaction
 fi
 

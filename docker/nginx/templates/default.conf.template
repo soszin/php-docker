@@ -5,7 +5,7 @@ server {
         include fastcgi_params_php;
     }
 
-    root /var/www/src/public;
+    root /var/www/public;
     index index.php index.html index.htm;
     client_max_body_size 64M;
 

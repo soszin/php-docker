@@ -7,7 +7,7 @@ services:
       context: ./
       dockerfile: ./docker/phpfpm/Dockerfile
     volumes:
-      - ./:/var/www/
+      - ./src/:/var/www/
   nginx:
     image: ${USER:-user}-${APP_NAME:-nginx}/nginx:local
     build:
@@ -17,7 +17,7 @@ services:
       NGINX_HOST: ${NGINX_HOST:-localhost}
       NGINX_PORT: ${NGINX_PORT:-80}
     volumes:
-      - ./:/var/www/
+      - ./src/:/var/www/
       - ./docker/nginx/templates:/etc/nginx/templates
     ports:
       - "80:80"
