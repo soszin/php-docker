@@ -4,6 +4,8 @@ ARG USER=www
 ARG UID=1000
 ARG GID=1000
 
+ENV USER ${USER}
+
 WORKDIR /var/www
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -25,7 +27,5 @@ RUN useradd -ms /bin/bash --no-user-group -g ${GID} -u ${UID} ${USER}
 
 COPY ./docker/phpfpm/docker-entrypoint.sh /docker-entrypoint
 RUN chmod +x /docker-entrypoint
-#
-ENTRYPOINT ["/docker-entrypoint"]
 
-USER ${USER}
+ENTRYPOINT ["/docker-entrypoint"]
